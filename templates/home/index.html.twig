@@ -3,5 +3,9 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <h1> Welcome User </h1>
+    <h1> Welcome User 
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {{ app.user.username }}
+    {% endif %}
+    </h1>
 {% endblock %}

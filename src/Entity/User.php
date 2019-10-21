@@ -55,6 +55,11 @@ class User implements UserInterface
      */
     private $isActive;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="User")
+     */
+    private $post;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -178,6 +183,18 @@ class User implements UserInterface
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): self
+    {
+        $this->post = $post;
 
         return $this;
     }
