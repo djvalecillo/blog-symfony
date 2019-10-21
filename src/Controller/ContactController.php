@@ -56,6 +56,11 @@ class ContactController extends AbstractController
      */
     public function show(Contact $contact): Response
     {
+        if(!$contact->getStatus()){
+            $contact->setStatus(true);
+            $this->getDoctrine()->getManager()->flush();
+        }
+        
         return $this->render('contact/show.html.twig', [
             'contact' => $contact,
         ]);
@@ -70,6 +75,7 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('contact_index');
