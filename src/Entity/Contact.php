@@ -32,7 +32,7 @@ class Contact
     private $message;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true, options = {"default": 0})
      */
     private $status;
 
@@ -84,11 +84,7 @@ class Contact
 
     public function getStatus()
     {
-        if($this->status){
-            return "Opened";
-        } else {
-            return "Unopened";
-        }
+        return $this->status;
     }
 
     public function setStatus(?bool $status): self
