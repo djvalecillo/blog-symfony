@@ -3,19 +3,21 @@
 {% block body %}
 
     <div class="row">
-        <div class="col-md-12 ">
-            <img src="{{ asset('uploads/posts/' ~ post.image) }}" height="200px" class="img-fluid" alt="Responsive image">
+        <div class="col-md-12 overflow">
+            <img src="{{ asset('uploads/posts/' ~ post.image) }}" class="img-fluid" alt="Responsive image">
         </div>
         <div class="col-md-8 blog-main">
           <div class="blog-post">
             <h2 class="blog-post-title">{{ post.title }}</h2>
-            <p class="blog-post-meta">{{ post.created ? post.created|date('Y-m-d H:i:s') : '' }} by <a href="#">Mark</a></p>
+            <p class="blog-post-meta">{{ post.created ? post.created|date('Y-m-d H:i:s') : '' }} 
+                by <a href="#">Mark</a>
+            </p>
             <p>
-                {{ post.text }}
+                {{ post.text|raw }}
             </p>
           </div><!-- /.blog-post --> 
-            <a href="{{ path('post_index') }}">back to list</a>
-            <a href="{{ path('post_edit', {'id': post.id}) }}">edit</a> 
+            <a href="{{ path('post_index') }}" class="btn btn-outline-primary">back to list</a>
+            <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-outline-primary">edit</a> 
             {{ include('post/_delete_form.html.twig') }} 
         </div><!-- /.blog-main -->
         
