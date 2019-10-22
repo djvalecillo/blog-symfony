@@ -21,6 +21,14 @@ class PostType extends AbstractType
                     new NotBlank([
                         'message' => 'Your title may not be blank.'
                     ])
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('image', FileType::class, [
+                'attr' => [
+                    'class' => 'form-control-file'
                 ]
             ])
             ->add('text', TextareaType::class, [
@@ -30,10 +38,10 @@ class PostType extends AbstractType
                     ])
                 ],
                 'attr' => [
-                    'rows' => 15
+                    'rows' => 15,
+                    'class' => 'form-control'
                 ]
             ])
-            ->add('image', FileType::class)
         ;
     }
 

@@ -2,6 +2,7 @@
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
           {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          <a class="text-muted" href="{{ path('post_new') }}">New Post</a>
           {% else %}
             <a class="text-muted" href="{{ path('app_register') }}">Subscribe</a>
           {% endif %}
@@ -14,7 +15,18 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
         </a>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ app.user.username }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="{{ path('post_new') }}">Add new Posts</a>
+                <a class="dropdown-item" href="{{ path('post_index') }}">My Posts</a>
+                <a class="dropdown-item" href="{{ path('contact_new') }}">Contact</a>
+                <div role="separator" class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+              </div>
+            </div>
         {% else %}
           <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_login') }}">Sign up</a>
         {% endif %}

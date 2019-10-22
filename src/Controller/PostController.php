@@ -37,7 +37,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->setUser($this->getUser());
+            $post->addUser($this->getUser());
             $file = $form['image']->getData();
             $file->move($this->getParameter('post_images_directory'), $file->getClientOriginalName());
             $post->setImage($file->getClientOriginalName());
@@ -47,7 +47,9 @@ class PostController extends AbstractController
             $entityManager->persist($post);
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_index');
+            return $this->render('post/show.html.twig', [
+                'post' => $post,
+            ]);
         }
 
         return $this->render('post/new.html.twig', [
