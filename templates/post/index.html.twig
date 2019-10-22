@@ -3,6 +3,9 @@
 {% block title %}Post index{% endblock %}
 
 {% block body %}
+
+    {{ include('post/head_post.html.twig') }} 
+    {{ include('post/grid_post.html.twig', {posts : posts}) }} 
     <h1>Post index</h1>
 
     <table class="table">

@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home Blog{% endblock %}
 
 {% block body %}
-    <h1> Welcome User 
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {{ app.user.username }}
-    {% endif %}
-    </h1>
+     
+    {{ include('post/head_post.html.twig') }} 
+    {{ include('post/grid_post.html.twig') }} 
+    {{ include('post/grid_post.html.twig') }} 
+
+    <nav class="blog-pagination">
+        <a class="btn btn-outline-primary" href="#">Older</a>
+        <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+    </nav>
 {% endblock %}
