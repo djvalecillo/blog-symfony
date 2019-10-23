@@ -10,15 +10,23 @@
           <div class="blog-post">
             <h2 class="blog-post-title">{{ post.title }}</h2>
             <p class="blog-post-meta">{{ post.created ? post.created|date('Y-m-d H:i:s') : '' }} 
-                by <a href="#">Mark</a>
+                by <a href="#">{{ post.user.username }}</a>
             </p>
             <p>
                 {{ post.text|raw }}
             </p>
           </div><!-- /.blog-post --> 
-            <a href="{{ path('post_index') }}" class="btn btn-outline-primary">back to list</a>
-            <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-outline-primary">edit</a> 
-            {{ include('post/_delete_form.html.twig') }} 
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ path('post_index') }}" class="btn btn-outline-primary">back to list</a>
+            {% else %}
+                <a href="{{ path('home') }}" class="btn btn-outline-primary">back to list</a>
+            {% endif %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if  app.user.id == post.user.id  %}
+                    <a href="{{ path('post_edit', {'id': post.id}) }}" class="btn btn-outline-primary">edit</a> 
+                    {{ include('post/_delete_form.html.twig') }} 
+                {% endif %}
+            {% endif %}
         </div><!-- /.blog-main -->
         
         {{ include('post/post_sidebar.html.twig') }} 

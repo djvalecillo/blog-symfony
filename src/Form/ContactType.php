@@ -19,6 +19,9 @@ class ContactType extends AbstractType
                     new NotBlank([
                         'message' => 'Your name may not be blank.'
                     ])
+                ],
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
             ->add('email', null, [
@@ -26,6 +29,9 @@ class ContactType extends AbstractType
                     new NotBlank([
                         'message' => 'Your email may not be blank.'
                     ])
+                ],
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
             ->add('message', TextareaType::class, [
@@ -35,7 +41,8 @@ class ContactType extends AbstractType
                     ])
                 ],
                 'attr' => [
-                    'rows' => 5
+                    'rows' => 8,
+                    'class' => 'form-control'
                 ]
             ])
         ;

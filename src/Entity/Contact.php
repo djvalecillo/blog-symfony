@@ -89,7 +89,7 @@ class Contact
 
     public function setStatus(?bool $status): self
     {
-        $this->status = false;
+        $this->status = $status;
 
         return $this;
     }

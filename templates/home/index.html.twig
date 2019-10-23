@@ -5,8 +5,7 @@
 {% block body %}
      
     {{ include('post/head_post.html.twig') }} 
-    {{ include('post/grid_post.html.twig') }} 
-    {{ include('post/grid_post.html.twig') }} 
+    {{ include('post/grid_post.html.twig',  {posts : posts}) }} 
 
     <nav class="blog-pagination">
         <a class="btn btn-outline-primary" href="#">Older</a>

@@ -10,7 +10,6 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Message</th>
                 <th>Status</th>
                 <th>Created</th>
                 <th>actions</th>
@@ -21,12 +20,10 @@
             <tr>
                 <td>{{ contact.name }}</td>
                 <td>{{ contact.email }}</td>
-                <td>{{ contact.message }}</td>
                 <td>{{ contact.status ? 'Opened' : 'Unopened' }}</td>
                 <td>{{ contact.created ? contact.created|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('contact_show', {'id': contact.id}) }}">show</a>
-                    <a href="{{ path('contact_edit', {'id': contact.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +34,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('contact_new') }}">Create new</a>
 {% endblock %}

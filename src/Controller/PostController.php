@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Entity\User;
 use App\Repository\PostRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @Route("/post")
@@ -23,8 +26,13 @@ class PostController extends AbstractController
      */
     public function index(PostRepository $postRepository): Response
     {
+        $user = $this->getDoctrine()->getRepository(User::class)
+            ->find($this->getUser()->getId());
+
+        $posts = $user->getPosts();
+
         return $this->render('post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
+            'posts' => $posts,
         ]);
     }
 
@@ -39,7 +47,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->addUser($this->getUser());
+            $post->setUser($this->getUser());
             $file = $form['image']->getData();
             $file->move($this->getParameter('post_images_directory'), $file->getClientOriginalName());
             $post->setImage($file->getClientOriginalName());
@@ -78,16 +86,22 @@ class PostController extends AbstractController
     {
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
+        
+        $post->setImage(
+            new File($this->getParameter('post_images_directory').'/'.$post->getImage())
+        );
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setUser($this->getUser());
             $file = $form['image']->getData();
             $file->move($this->getParameter('post_images_directory'), $file->getClientOriginalName());
             $post->setImage($file->getClientOriginalName());
-
+        
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('post_index');
+            return $this->render('post/show.html.twig', [
+                'post' => $post,
+            ]);
         }
 
         return $this->render('post/edit.html.twig', [

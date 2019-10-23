@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-
+use Symfony\Component\Validator\Constraints\File;
 
 class PostType extends AbstractType
 {
@@ -27,6 +27,7 @@ class PostType extends AbstractType
                 ]
             ])
             ->add('image', FileType::class, [
+                'mapped' => false,
                 'attr' => [
                     'class' => 'form-control-file'
                 ]
@@ -35,7 +36,7 @@ class PostType extends AbstractType
                 "constraints" => [
                     new NotBlank([
                         'message' => 'Your text may not be blank.'
-                    ])
+                    ]),
                 ],
                 'attr' => [
                     'rows' => 15,

@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/contact")
@@ -17,6 +19,7 @@ class ContactController extends AbstractController
 {
     /**
      * @Route("/", name="contact_index", methods={"GET"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function index(ContactRepository $contactRepository): Response
     {
@@ -42,7 +45,9 @@ class ContactController extends AbstractController
             $entityManager->persist($contact);
             $entityManager->flush();
 
-            return $this->redirectToRoute('contact_index');
+            //$this->addFlash('notice','Lo sentimos ocurrio un error');
+            $this->addFlash('success','Gracias por comunicarte con nosotros. Te responderemos pronto.');
+            return $this->redirectToRoute('contact_new');
         }
 
         return $this->render('contact/new.html.twig', [
@@ -53,6 +58,7 @@ class ContactController extends AbstractController
 
     /**
      * @Route("/{id}", name="contact_show", methods={"GET"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function show(Contact $contact): Response
     {
@@ -68,6 +74,7 @@ class ContactController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="contact_edit", methods={"GET","POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function edit(Request $request, Contact $contact): Response
     {
@@ -89,6 +96,7 @@ class ContactController extends AbstractController
 
     /**
      * @Route("/{id}", name="contact_delete", methods={"DELETE"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function delete(Request $request, Contact $contact): Response
     {

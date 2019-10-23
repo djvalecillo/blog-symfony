@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\HttpFoundation\File\File;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
@@ -39,9 +39,11 @@ class Post
     private $created;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="post")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $User;
+
 
     public function __construct()
     {
@@ -101,34 +103,16 @@ class Post
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUser(): Collection
+    public function getUser(): ?User
     {
         return $this->User;
     }
 
-    public function addUser(User $user): self
+    public function setUser(?User $User): self
     {
-        if (!$this->User->contains($user)) {
-            $this->User[] = $user;
-            $user->setPost($this);
-        }
+        $this->User = $User;
 
         return $this;
     }
 
-    public function removeUser(User $user): self
-    {
-        if ($this->User->contains($user)) {
-            $this->User->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getPost() === $this) {
-                $user->setPost(null);
-            }
-        }
-
-        return $this;
-    }
 }
